@@ -1,0 +1,86 @@
+<Window x:Class="ClientApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClientApp"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Text Editor" Height="450" Width="800">
+    <Window.Style>
+        <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}"/>
+    </Window.Style>
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+            <Menu IsMainMenu="True">
+                <MenuItem Header="File">
+                    <MenuItem Header="Open" Click="Open_Click"/>
+                    <MenuItem Header="Save" Click="Save_Click" Icon="{materialDesign:PackIcon Kind=ContentSave}"/>
+                    <MenuItem Header="SaveAs" Click="SaveAs_Click"/>
+                    <MenuItem Header="Print" Click="Print_Click" Icon="{materialDesign:PackIcon Kind=Printer}"/>
+                    <MenuItem Header="Exit" InputGestureText="Alt+F4" Click="Close_Click" Icon="{materialDesign:PackIcon Kind=ExitToApp}"/>
+                </MenuItem>
+                <MenuItem Header="Edit">
+                    <MenuItem Header="Copy" InputGestureText = "Ctrl+C" Click="Copy_Click" Icon="{materialDesign:PackIcon Kind=ContentCopy}"/>
+                    <MenuItem Header="Cut" InputGestureText = "Ctrl+X" Click="Cut_Click" Icon="{materialDesign:PackIcon Kind=ContentCut}"/>
+                    <MenuItem Header="Paste" InputGestureText = "Ctrl+V" Click="Paste_Click" Icon="{materialDesign:PackIcon Kind=ContentPaste}"/>
+                    <MenuItem Header="Selected All" InputGestureText = "Ctrl+A" Click="SelectAll_Click" Icon="{materialDesign:PackIcon Kind=SelectAll}"/>
+                    <MenuItem Header="Delete" InputGestureText = "Del   " Click="Delete_Click" Icon="{materialDesign:PackIcon Kind=Delete}"/>
+                </MenuItem>
+                <MenuItem Header="Format">
+                    <MenuItem Header="Font" Click="Font_Click" Icon="{materialDesign:PackIcon Kind=FormatFont}"/>
+                    <MenuItem Header="Color" Click="Color_Click" Icon="{materialDesign:PackIcon Kind=Color}"/>
+                </MenuItem>
+                <MenuItem Header="Theme">
+                    <MenuItem Click="darkTheme" Header="dark"></MenuItem>
+                    <MenuItem Click="lightTheme" Header="light"></MenuItem>
+                    <MenuItem Click="greenTheme" Header="green"></MenuItem>
+                    <MenuItem Click="blueTheme" Header="blue"></MenuItem>
+                    <MenuItem Click="redTheme" Header="red"></MenuItem>
+                </MenuItem>
+            </Menu>
+        <Button Content="About as" Click="aboutAs_Click"/>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+            <ToolBar ToolBarTray.IsLocked="True"> 
+                <Button Margin="5" Click="Bolt_Click" Content=" B " FontWeight="Bold"></Button>
+                <Button Margin="5" Click="Italic_Click" Content=" I " FontStyle="Italic"></Button>
+                <Button Margin="5" Click="Underline_Click" Content=" U "></Button>
+                <ComboBox Margin="0,5,5,5" Name="size_comboBox" IsReadOnly="False" IsEditable="True" TextBoxBase.TextChanged="TextBox_TextChanged" Text="{Binding ElementName=size_comboBox, Path=SelectedValue}"></ComboBox>
+                <Button Margin="5" Click="leftTextAlign" Content="{materialDesign:PackIcon Kind=FormatAlignLeft}"/>
+                <Button Margin="5" Click="centerTextAlign" Content="{materialDesign:PackIcon Kind=FormatAlignCenter}"/>
+                <Button Margin="5" Click="rightTextAlign" Content="{materialDesign:PackIcon Kind=FormatAlignRight}"/>
+                <Button Margin="5" Click="justifyTextAlign" Content="{materialDesign:PackIcon Kind=FormatAlignJustify}"/>
+            </ToolBar>
+            <local:Toggle DockPanel.Dock="Right" Checked="Toggle_Checked" Unchecked="Toggle_Unchecked" ></local:Toggle>
+        </DockPanel>
+
+        <StatusBar DockPanel.Dock="Bottom">
+            <Label Content="Lines: "/>
+            <TextBlock x:Name="ln"/>
+            <Label Content="Words: "/>
+            <TextBlock x:Name="wr"/>
+            <Label Content="Symbols: "/>
+            <TextBlock x:Name="sm"/>
+        </StatusBar>
+        
+        <DockPanel LastChildFill="False">
+            <RichTextBox Name = "richTB" Margin="10" VerticalScrollBarVisibility="Visible" SpellCheck.IsEnabled="True" Language="en-US" TextChanged="richTB_TextChanged">
+                <RichTextBox.Resources>
+                    <Style TargetType="{x:Type Paragraph}">
+                        <Setter Property="Margin" Value="0" />
+                    </Style>
+                </RichTextBox.Resources>
+                <RichTextBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Copy" InputGestureText = "Ctrl+C" Click="Copy_Click" Icon="{materialDesign:PackIcon Kind=ContentCopy}"/>
+                        <MenuItem Header="Cut" InputGestureText = "Ctrl+X" Click="Cut_Click" Icon="{materialDesign:PackIcon Kind=ContentCut}"/>
+                        <MenuItem Header="Paste" InputGestureText = "Ctrl+V" Click="Paste_Click" Icon="{materialDesign:PackIcon Kind=ContentPaste}"/>
+                        <MenuItem Header="Selected All" InputGestureText = "Ctrl+A" Click="SelectAll_Click" Icon="{materialDesign:PackIcon Kind=SelectAll}"/>
+                        <MenuItem Header="Delete" InputGestureText = "Del   " Click="Delete_Click" Icon="{materialDesign:PackIcon Kind=Delete}"/>
+                    </ContextMenu>
+                </RichTextBox.ContextMenu>
+            </RichTextBox>
+        </DockPanel>
+    </DockPanel>
+</Window>
